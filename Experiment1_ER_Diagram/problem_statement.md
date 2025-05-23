@@ -45,71 +45,58 @@ Design a database for patient management, appointments, medical records, and bil
    - Why you chose the entities and relationships.
    - How you modeled prerequisites or billing.
 
-# ER Diagram Submission - Student 
-## Name:NITHIYANERANJAN S
-## Reg.no:212223040136
+# ER Diagram Submission - Student Name
 
 ## Scenario Chosen:
-University 
+University / Hospital (choose one)
 
 ## ER Diagram:
-![image](https://github.com/user-attachments/assets/8074880e-e8f8-4a4c-af85-967e800240f2)
-
+![Screenshot (69)](https://github.com/user-attachments/assets/087ed14f-fc84-434f-823e-174b3ec856e8)
 
 ## Entities and Attributes:
-### Student:
-Attributes: StudentID, FirstName, LastName, DateOfBirth, Email, PhoneNumber, EnrollmentDate, DepartmentID
-### Faculty:
-Attributes: FacultyID, FirstName, LastName, Email, PhoneNumber, HireDate, DepartmentID
-### Department:
-Attributes: DepartmentID, DepartmentName, Location
-### Course:
-Attributes: CourseID, CourseName, CourseCode, Credits, DepartmentID
-### Enrollment:
-Attributes: EnrollmentID, StudentID, CourseID, EnrollmentDate, Grade
-### Class:
-Attributes: ClassID, CourseID, FacultyID, Semester, Year, Schedule
-### Advising:
-Attributes: AdvisingID, StudentID, FacultyID, AdvisingDate
+University - Attributes: University code (Primary Key), Name
+
+Student- Attributes: Student Name, Student ID (Primary Key)
+
+Courses - Attributes: Course Name, Course code (Primary Key), Pre-requisite
+
+Professor - Attributes: Professor ID (Primary Key), Professor Name, Experience
+
 ## Relationships and Constraints:
-### Student–Advising–Faculty
-Relationship: Advises
-Cardinality: Many-to-Many (each student can have multiple advisors, each faculty can advise multiple students)
-Participation: Total on Advising
-### Student–Enrollment–Course:
-Relationship: Enrolled in
-Cardinality: Many-to-Many
-Participation: Total on Enrollment
-### Course–Class–Faculty:
-Relationship: Teaches
-Cardinality: Many-to-Many (each course can be taught in multiple classes, each faculty can teach multiple classes)
-### Course–Department:
-Relationship: Offered by
-Cardinality: Many-to-One (Each course belongs to one department)
-### Student–Department:
-Relationship: Belongs to
-Cardinality: Many-to-One
-### Faculty–Department:
-Relationship: Belongs to
-Cardinality: Many-to-One
-### Class–Course:
-Relationship: Includes
-Cardinality: Many-to-One
-### Enrollment–Class:
-Relationship: Taught by
-Not standard; assumes indirect mapping via faculty
+1. books (Between University and Student)
+   
+   Cardinality: One university can have many students (1:N)
+
+   Participation: Total participation of Student (Every student belongs to a university)
+
+3. assigned (Between Student and Courses)
+   
+   Cardinality: Many students can be assigned many courses (M:N)
+
+   Participation: Partial
+
+5. delivers (Between Professor and Courses)
+   
+   Cardinality: One professor can deliver many courses, but each course is delivered by one professor (1:N)
+
+   Participation: Total participation of Courses
+
 ## Extension (Prerequisite / Billing):
-### Prerequisite Modeling:
-Could be modeled with a recursive relationship on Course:
-Relationship: Requires
-Cardinality: Many-to-Many (a course can have many prerequisites and be a prerequisite for many others)
+Pre-requisite is modeled as an attribute in the Courses entity.
+
+It stores information about a prerequisite course required to take that course.
+
+Assumption: It is a self-referencing attribute (course code of the prerequisite).
+
 ## Design Choices:
-Use of separate entities for Advising, Enrollment, and Class helps normalize many-to-many relationships and maintain relational integrity.
-Department as a central entity provides a logical way to group students, faculty, and courses.
-
-Class entity includes scheduling details, separating course content from the time/location of delivery.
-
-The design is modular and supports easy extension for future requirements like prerequisites, billing, or attendance.
+Entities like University, Student, Courses, and Professor were chosen based on key real-world components in an academic system.
+Relationships like books, assigned, and delivers were used to capture meaningful associations.
+Pre-requisite is modeled as an attribute instead of a separate relationship for simplicity and clarity.
+Assumption: A course can have at most one prerequisite; recursive relationships are simplified to attributes.
 
 ## RESULT
-Thus, the Entity-Relationship (ER) Diagram have been created successfully.
+The ER model represents a simple academic system where:
+1. A university books students.
+2. Students are assigned to courses.
+3. Professors deliver those courses.
+4. Each course may have a pre-requisite.
